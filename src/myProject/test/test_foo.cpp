@@ -5,5 +5,5 @@
 
 TEST_CASE("bar", "[myProject, foo]")
 {
-    REQUIRE(myproject::bar() == 47);
+    REQUIRE(myproject::bar() == 1);
 }

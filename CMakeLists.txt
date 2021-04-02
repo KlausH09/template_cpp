@@ -4,7 +4,7 @@ project(CppExampleProject) # FIXME
 set(CMAKE_CXX_STANDARD 17) # FIXME
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-include("${PROJECT_SOURCE_DIR}/cmake/KHTesting.cmake")
+include(cmake/KHTesting.cmake)
 
 function(addCompileOptions target)
   target_compile_options(${target} PRIVATE

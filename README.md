@@ -5,12 +5,8 @@
 Testing
 
 ```sh
-# catch2 (Linux/macOS/Windows)
-git clone https://github.com/catchorg/Catch2.git
-cd Catch2
-cmake -B ./build -S .
-cmake --build ./build --parallel
-(sudo) cmake --build ./build --target install
+# clone submodule catch2
+git submodule update --init --recursive
 
 # for memcheck (only Linux+GNU)
 sudo apt-get install valgrind

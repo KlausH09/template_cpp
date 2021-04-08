@@ -1,9 +1,11 @@
 cmake_minimum_required(VERSION 3.5)
 
 project(CppExampleProject) # FIXME
+
 set(CMAKE_CXX_STANDARD 17) # FIXME
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+add_subdirectory(extern/catch2)
 include(cmake/KHTesting.cmake)
 
 function(addCompileOptions target)

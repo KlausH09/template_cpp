@@ -1,4 +1,4 @@
-set(Target myProjectTests)
+set(Target "${PROJECT_NAME}_test")
 
 add_executable(${Target}
     test_foo.cpp

@@ -2,65 +2,46 @@ name: run tests
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 defaults:
   run:
     working-directory: ./
 
 jobs:
-
   build-GNU:
     runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v2
-    - name: install valgrid
-      run: |
-        sudo apt-get update && \
-        sudo apt-get install valgrind lcov clang-tidy
-    - name: install catch2
-      run: |
-         mkdir tmp && cd tmp && \
-         git clone https://github.com/catchorg/Catch2.git && \
-         cd Catch2 && \
-         cmake -B ./build -S . && \
-         cmake --build ./build --parallel && \
-         sudo cmake --build ./build --target install
-    - name: test
-      run: make test linting=ON memcheck=ON codecov=ON
-        
+      - uses: actions/checkout@v2
+      - name: init
+        run: git submodule update --init --recursive
+      - name: install valgrid
+        run: |
+          sudo apt-get update && \
+          sudo apt-get install valgrind lcov clang-tidy
+      - name: test
+        run: make test linting=ON memcheck=ON codecov=ON
+
   build-MSVC:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: install catch2
-      run: |
-         mkdir tmp; cd tmp;
-         git clone https://github.com/catchorg/Catch2.git;
-         cd Catch2;
-         cmake -B ./build -S .;
-         cmake --build ./build --parallel;
-         cmake --build ./build --target install
-    - name: configure
-      run: cmake -B ./build -S . -DCMAKE_BUILD_TYPE=Debug -DBuild_Tests=ON
-    - name: make
-      run: cmake --build ./build --parallel --config Debug
-    - name: test
-      run: cmake --build build --target RUN_TESTS --config Debug
-        
+      - uses: actions/checkout@v2
+      - name: init
+        run: git submodule update --init --recursive
+      - name: configure
+        run: cmake -B ./build -S . -DCMAKE_BUILD_TYPE=Debug -DBuild_Tests=ON
+      - name: make
+        run: cmake --build ./build --parallel --config Debug
+      - name: test
+        run: cmake --build build --target RUN_TESTS --config Debug
+
   build-Clang:
     runs-on: macos-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: install catch2
-      run: |
-         mkdir tmp && cd tmp && \
-         git clone https://github.com/catchorg/Catch2.git && \
-         cd Catch2 && \
-         cmake -B ./build -S . && \
-         cmake --build ./build --parallel && \
-         sudo cmake --build ./build --target install
-    - name: test
-      run: make test linting=OFF memcheck=OFF codecov=OFF
+      - uses: actions/checkout@v2
+      - name: init
+        run: git submodule update --init --recursive
+      - name: test
+        run: make test linting=OFF memcheck=OFF codecov=OFF
